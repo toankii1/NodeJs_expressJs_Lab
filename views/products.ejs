@@ -4,22 +4,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Product List</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+        }
+        
+        .btn-del {
+            color: red;
+            text-decoration: none;
+        }
+        
+        .btn-edit {
+            color: blue;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+    </style>
 </head>
 
 <body>
     <h2>Add Product</h2>
     <form action="/add" method="post">
-        Name: <input name="name"><br> Price: <input name="price"><br> Quantity: <input name="quantity"><br>
-        <button>Add</button>
+        Name: <input name="name" required><br><br> Price: <input name="price" type="number" required><br><br> Quantity: <input name="quantity" type="number" required><br><br>
+        <button type="submit">Add</button>
     </form>
 
-    <h2>Products</h2>
+    <h2>Products List</h2>
     <table border="1">
         <tr>
             <th>ID</th>
             <th>Name</th>
             <th>Price</th>
             <th>Quantity</th>
+            <th>Action</th>
         </tr>
         <% products.forEach(p => { %>
             <tr>
@@ -34,6 +59,11 @@
                 </td>
                 <td>
                     <%= p.quantity %>
+                </td>
+                <td>
+                    <a href="/edit/<%= p.id %>" class="btn-edit">Edit</a>
+
+                    <a href="/delete/<%= p.id %>" class="btn-del" onclick="return confirm('Bạn có chắc muốn xóa không?');">Delete</a>
                 </td>
             </tr>
             <% }) %>
