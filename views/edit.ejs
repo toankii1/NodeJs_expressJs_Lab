@@ -3,27 +3,100 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Edit Product</title>
+    <title>Chỉnh sửa sản phẩm</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            /* Căn giữa theo chiều dọc */
+            margin: 0;
+        }
+        
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        
+        h2 {
+            margin-top: 0;
+            color: #333;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            /* Để padding không làm vỡ khung */
+        }
+        
+        .btn-save {
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .btn-save:hover {
+            background-color: #0056b3;
+        }
+        
+        .btn-cancel {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #666;
+            text-decoration: none;
+        }
+        
+        .btn-cancel:hover {
+            color: #333;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
-    <h2>Edit Product:
-        <%= product.name %>
-    </h2>
 
-    <form action="/update/<%= product.id %>" method="post">
-        <label>Name:</label><br>
-        <input name="name" value="<%= product.name %>" required><br><br>
+    <div class="card">
+        <h2>Sửa Sản Phẩm</h2>
+        <form action="/update/<%= product.id %>" method="post">
+            <label>Tên sản phẩm</label>
+            <input name="name" value="<%= product.name %>" required>
 
-        <label>Price:</label><br>
-        <input name="price" type="number" value="<%= product.price %>" required><br><br>
+            <label>Giá</label>
+            <input name="price" type="number" value="<%= product.price %>" required>
 
-        <label>Quantity:</label><br>
-        <input name="quantity" type="number" value="<%= product.quantity %>" required><br><br>
+            <label>Số lượng</label>
+            <input name="quantity" type="number" value="<%= product.quantity %>" required>
 
-        <button type="submit">Update Product</button>
-        <a href="/" style="margin-left: 10px;">Cancel</a>
-    </form>
+            <button type="submit" class="btn-save">Lưu thay đổi</button>
+            <a href="/" class="btn-cancel">Hủy bỏ</a>
+        </form>
+    </div>
+
 </body>
 
 </html>

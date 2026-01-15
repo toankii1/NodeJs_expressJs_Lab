@@ -3,71 +3,165 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Product List</title>
+    <title>Quản lý Sản phẩm</title>
     <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .container {
+            background-color: white;
+            width: 100%;
+            max-width: 900px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #068a25;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            flex: 1;
+        }
+        
+        button.btn-add {
+            background-color: #068a25;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        button.btn-add:hover {
+            background-color: #117025;
+        }
+        /* Bảng dữ liệu */
+        
         table {
-            width: 50%;
+            width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
         
         th,
         td {
-            padding: 8px;
+            padding: 12px 15px;
             text-align: left;
+            border-bottom: 1px solid #eee;
         }
         
-        .btn-del {
-            color: red;
+        th {
+            background-color: #3c96f7;
+            color: white;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+        
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        /* Nút hành động */
+        
+        .action-links a {
             text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            margin-right: 5px;
+            display: inline-block;
         }
         
         .btn-edit {
-            color: blue;
-            text-decoration: none;
-            margin-right: 10px;
+            background-color: #068a25;
+            color: #333;
+        }
+        
+        .btn-edit:hover {
+            background-color: #117025;
+        }
+        
+        .btn-del {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-del:hover {
+            background-color: #c82333;
         }
     </style>
 </head>
 
 <body>
-    <h2>Add Product</h2>
-    <form action="/add" method="post">
-        Name: <input name="name" required><br><br> Price: <input name="price" type="number" required><br><br> Quantity: <input name="quantity" type="number" required><br><br>
-        <button type="submit">Add</button>
-    </form>
 
-    <h2>Products List</h2>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Action</th>
-        </tr>
-        <% products.forEach(p => { %>
-            <tr>
-                <td>
-                    <%= p.id %>
-                </td>
-                <td>
-                    <%= p.name %>
-                </td>
-                <td>
-                    <%= p.price %>
-                </td>
-                <td>
-                    <%= p.quantity %>
-                </td>
-                <td>
-                    <a href="/edit/<%= p.id %>" class="btn-edit">Edit</a>
+    <div class="container">
+        <h2>Thêm Sản Phẩm Mới</h2>
+        <form action="/add" method="post" class="form-group">
+            <input name="name" placeholder="Tên sản phẩm" required>
+            <input name="price" type="number" placeholder="Giá" required>
+            <input name="quantity" type="number" placeholder="Số lượng" required>
+            <button type="submit" class="btn-add">+ Thêm</button>
+        </form>
 
-                    <a href="/delete/<%= p.id %>" class="btn-del" onclick="return confirm('Bạn có chắc muốn xóa không?');">Delete</a>
-                </td>
-            </tr>
-            <% }) %>
-    </table>
+        <h2>Danh Sách Sản Phẩm</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 50px;">ID</th>
+                    <th>Tên Sản Phẩm</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th style="width: 150px;">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if(products.length === 0) { %>
+                    <tr>
+                        <td colspan="5" style="text-align:center;">Chưa có sản phẩm nào.</td>
+                    </tr>
+                    <% } %>
+
+                        <% products.forEach(p => { %>
+                            <tr>
+                                <td>
+                                    <%= p.id %>
+                                </td>
+                                <td><strong><%= p.name %></strong></td>
+                                <td>
+                                    <%= parseInt(p.price).toLocaleString('vi-VN') %> đ</td>
+                                <td>
+                                    <%= p.quantity %>
+                                </td>
+                                <td class="action-links">
+                                    <a href="/edit/<%= p.id %>" class="btn-edit">Sửa</a>
+                                    <a href="/delete/<%= p.id %>" class="btn-del" onclick="return confirm('Ban that su muon xoa khong?');">Xóa</a>
+                                </td>
+                            </tr>
+                            <% }) %>
+            </tbody>
+        </table>
+    </div>
+
 </body>
 
 </html>
